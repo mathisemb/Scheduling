@@ -121,11 +121,8 @@ void OListInsert(OList * L, void * key, void * data) {
 List* OListToList(const OList* L) {
 	/* A FAIRE */
 	List res = newList(L->viewData, L->freeData);
-	res->numelm = L->numelm;
-	res->head = L->head;
-	res->tail = L->tail;
-
-	freeOList(L);
-
+	for( OLNode* iterator = L->head; iterator; iterator = iterator->succ ){
+		listInsertLast(res, iterator->data);
+	}
 	return res;
 }
