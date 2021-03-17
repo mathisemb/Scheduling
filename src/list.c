@@ -41,11 +41,11 @@ void freeList(List * L, int deleteData) {
 void viewList(const List * L) {
 	printf( "[ " );
 	for( LNode* iterator = L->head; iterator->succ; iterator = iterator->succ ) {
-		L->viewData(iterator->data);
+		L->viewData((int*)iterator->data); // il faut cast la data (de type void*) en int* car viewInt prend un int* en paramètre
 		printf(", ");
   	}
-	L->viewData(L->tail->data);
- 	printf( " ]\n\n" );
+	L->viewData((int*)L->tail->data);
+ 	printf( " ]\n" );
 }
 
 void listInsertFirst(List * L, void * data) {
@@ -121,9 +121,15 @@ LNode* listRemoveLast(List * L) {
 
 LNode* listRemoveNode(List * L, LNode * node) {
 	if (L->numelm > 0) {
-		node->pred->succ = node->succ;
-		node->succ->pred = node->pred;
-		L->numelm -= 1;
+		if (node == L->head)
+			return listRemoveFirst(L);
+		else if (node == L->tail)
+			return listRemoveLast(L);
+		else {
+			node->pred->succ = node->succ;
+			node->succ->pred = node->pred;
+			L->numelm -= 1;
+			return node;
+		}
 	}
-	return node;
 }

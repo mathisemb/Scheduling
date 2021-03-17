@@ -10,7 +10,6 @@
  * Renvoie le nouveau nœud créé.
  */
 static OLNode * newOLNode(void* key, void* data) {
-	/* A FAIRE */
 	OLNode* node = malloc(sizeof(OLNode));
 	node->key = key;
 	node->data = data;
@@ -22,7 +21,6 @@ static OLNode * newOLNode(void* key, void* data) {
 OList * newOList(int (*preceed)(const void*, const void*),
 				void (*viewKey)(const void*), void (*viewData)(const void*),
 				void (*freeKey)(void*), void (*freeData)(void*)) {
-	/* A FAIRE */
 	OList* liste = malloc(sizeof(OList));
 	liste->head = NULL;
 	liste->tail = NULL;
@@ -37,7 +35,6 @@ OList * newOList(int (*preceed)(const void*, const void*),
 void freeOList(OList * L, int deleteKey, int deleteData) {
 	assert(deleteKey == 0 || deleteKey == 1);
 	assert(deleteData == 0 || deleteData == 1);
-	/* A FAIRE */
 	for ( OLNode* iterator = L->head; iterator; ) {
     	OLNode* node = iterator;
     	iterator = iterator->succ;
@@ -53,24 +50,22 @@ void freeOList(OList * L, int deleteKey, int deleteData) {
 }
 
 void viewOList(const OList * L) {
-	/* A FAIRE */
 	printf( "[ " );
 	for( OLNode* iterator = L->head; iterator->succ; iterator = iterator->succ ) {
-		printf("key : ")
+		printf("key : ");
 		L->viewKey(iterator->key);
-		printf(" data : ")
+		printf(" data : ");
 		L->viewData(iterator->data);
 		printf(", ");
   	}
-	printf("key : ")
+	printf("key : ");
 	L->viewKey(L->tail->key);
-	printf(" data : ")
+	printf(" data : ");
 	L->viewData(L->tail->data);
- 	printf( "]\n\n" );
+ 	printf( "]\n" );
 }
 
 void OListInsert(OList * L, void * key, void * data) {
-	/* A FAIRE */
 	OLNode* InsertedNode = newOLNode(key, data);
 	if (L->numelm==0) {
 		// insertion dans une liste vide
@@ -78,14 +73,14 @@ void OListInsert(OList * L, void * key, void * data) {
 		L->tail = InsertedNode;
 	}
 	else { // la liste n'est pas vide
-		if (preceed(key, L->head->key) == 1) {
+		if (L->preceed(key, L->head->key) == 1) {
 			// insertion en tête
 			L->head->pred = InsertedNode;
 			InsertedNode->succ = L->head;
 			L->head = InsertedNode;
 		}
 		else {
-			if (preceed(L->tail->key, key) == 1) {
+			if (L->preceed(L->tail->key, key) == 1) {
 			// insertion en queue
 				L->tail->succ = InsertedNode;
 				InsertedNode->pred = L->tail;
@@ -104,14 +99,13 @@ void OListInsert(OList * L, void * key, void * data) {
 					iterator = iterator->succ;
 				}
 				// ici iterator->key >= key
-				// il faut donc insérer le noeud en key juste avannt iterator
+				// il faut donc insérer le noeud en key juste avant iterator
 
 				InsertedNode->pred = iterator->pred;
 				InsertedNode->succ = iterator;
 
 				iterator->pred->succ = InsertedNode;
 				iterator->pred = InsertedNode;
-				free(iterator);
 			}
 		}
 	}
@@ -119,10 +113,11 @@ void OListInsert(OList * L, void * key, void * data) {
 }
 
 List* OListToList(const OList* L) {
-	/* A FAIRE */
-	List res = newList(L->viewData, L->freeData);
+	List* res = newList(L->viewData, L->freeData);
 	for( OLNode* iterator = L->head; iterator; iterator = iterator->succ ){
-		listInsertLast(res, iterator->data);
+		int *data = malloc(sizeof(int));
+		*data = *((int*)iterator->data);
+		listInsertLast(res, data);
 	}
 	return res;
 }

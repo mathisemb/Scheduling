@@ -17,6 +17,7 @@ OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 .PHONY: run all remake clean delete
 
 all : $(PROG)
+	./$(PROG)
 
 $(PROG) : $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
