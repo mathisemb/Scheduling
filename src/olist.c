@@ -30,6 +30,7 @@ OList * newOList(int (*preceed)(const void*, const void*),
 	liste->viewData = viewData;
 	liste->freeKey = freeKey;
 	liste->freeData = freeData;
+	return liste;
 }
 
 void freeOList(OList * L, int deleteKey, int deleteData) {
@@ -115,9 +116,7 @@ void OListInsert(OList * L, void * key, void * data) {
 List* OListToList(const OList* L) {
 	List* res = newList(L->viewData, L->freeData);
 	for( OLNode* iterator = L->head; iterator; iterator = iterator->succ ){
-		int *data = malloc(sizeof(int));
-		*data = *((int*)iterator->data);
-		listInsertLast(res, data);
+		listInsertLast(res, iterator->data);
 	}
 	return res;
 }

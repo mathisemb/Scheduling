@@ -53,7 +53,6 @@ int main(int argv, char *argc[]) {
 
 
 	// Test List
-	/*
 	List* L = newList(viewInt, freeInt); // L = []
 
 	int *i1 = malloc(sizeof(int));
@@ -95,37 +94,36 @@ int main(int argv, char *argc[]) {
 	freeList(L,1);
 
 
-
 	// Test OList
-	OList* OL = newOList(compareInt , viewInt, viewInt, freeInt, freeInt); // L = []
+	OList* OrdL = newOList(compareInt , viewInt, viewInt, freeInt, freeInt); // L = []
 
 	int *k1 = malloc(sizeof(int));
 	*k1 = 1;
 	int *n1 = malloc(sizeof(int));
 	*n1 = 1;
-	OListInsert(OL, k1, n1); // L = [ 1 ]
+	OListInsert(OrdL, k1, n1); // L = [ 1 ]
 
 	int *k2 = malloc(sizeof(int));
 	*k2 = 7;
 	int *n2 = malloc(sizeof(int));
 	*n2 = 55;
-	OListInsert(OL, k2, n2); // L = [ 1, 55 ]
+	OListInsert(OrdL, k2, n2); // L = [ 1, 55 ]
 
 	int *k3 = malloc(sizeof(int));
 	*k3 = 3;
 	int *n3 = malloc(sizeof(int));
 	*n3 = 3;
-	OListInsert(OL, k3, n3); // L = [ 1, 3, 55 ]
+	OListInsert(OrdL, k3, n3); // L = [ 1, 3, 55 ]
 
-	viewOList(OL); // L = [ 1, 3, 55 ]
+	viewOList(OrdL); // L = [ 1, 3, 55 ]
 
-	List* L2 = OListToList(OL);
+	List* L2 = OListToList(OrdL);
 
-	freeOList(OL,1,1);
+	freeOList(OrdL,1,0);
 
 	viewList(L2); // L = [ 1, 3, 55 ]
 	freeList(L2, 1); // car OListToList utilise newList
-	*/
+
 
 
 
@@ -133,21 +131,21 @@ int main(int argv, char *argc[]) {
 	printf("1er test (BST) :\n");
 	BSTree* T = newBSTree(compareInt, viewInt, viewInt, freeInt, freeInt);
 	
-	int *k2 = malloc(sizeof(int)); *k2 = 2;
-	int *d2 = malloc(sizeof(int)); *d2 = 36;
-	BSTreeInsert(T, k2, d2);
+	int *k18 = malloc(sizeof(int)); *k18 = 2;
+	int *d18 = malloc(sizeof(int)); *d18 = 36;
+	BSTreeInsert(T, k18, d18);
 
-	int *k1 = malloc(sizeof(int)); *k1 = 1;
-	int *d1 = malloc(sizeof(int)); *d1 = 7;
-	BSTreeInsert(T, k1, d1);
+	int *k19 = malloc(sizeof(int)); *k19 = 1;
+	int *d19 = malloc(sizeof(int)); *d19 = 7;
+	BSTreeInsert(T, k19, d19);
 
 	int *k4 = malloc(sizeof(int)); *k4 = 4;
 	int *d4 = malloc(sizeof(int)); *d4 = 18;
 	BSTreeInsert(T, k4, d4);
 
-	int *k3 = malloc(sizeof(int)); *k3 = 3;
-	int *d3 = malloc(sizeof(int)); *d3 = 10;
-	BSTreeInsert(T, k3, d3);
+	int *k20 = malloc(sizeof(int)); *k20 = 3;
+	int *d20 = malloc(sizeof(int)); *d20 = 10;
+	BSTreeInsert(T, k20, d20);
 
 	viewBSTree(T);
 
@@ -158,7 +156,6 @@ int main(int argv, char *argc[]) {
 	printf("\n");
 
 	freeBSTree(T, 1, 1);
-
 
 
 	printf("\n2eme test (EBST) :\n");
@@ -177,9 +174,9 @@ int main(int argv, char *argc[]) {
 	EBSTreeInsert(T2, k7, d7);
 
 	viewBSTree(T2);
-	List* L2 = BSTreeToList(T2);
+	List* L3 = BSTreeToList(T2);
 	printf("Liste T2 :\n");
-	viewList(L2);
+	viewList(L3);
 
 	BSTNode* pred2 = findPredecessor(T2, T2->root);
 	BSTNode* succ2 = findSuccessor(T2, T2->root);
@@ -187,37 +184,51 @@ int main(int argv, char *argc[]) {
 	printf("\nSucc : "); viewInt((int*)succ2->data);
 	printf("\n");
 
-	freeBSTree(T2, 1, 1);
-	freeList(L2, 1);
+	freeBSTree(T2, 1, 0);
+	freeList(L3, 1);
 	
-
 
 	printf("\n3eme test (EBST) :\n");
 	BSTree* T3 = newEBSTree(compareInt, viewInt, viewInt, freeInt, freeInt);
 
-	int *k8 = malloc(sizeof(int)); *k8 = 1;
-	int *d8 = malloc(sizeof(int)); *d8 = 43;
+	int *k8 = malloc(sizeof(int)); *k8 = 3;
+	int *d8 = malloc(sizeof(int)); *d8 = 3;
 	EBSTreeInsert(T3, k8, d8);
 
-	int *k9 = malloc(sizeof(int)); *k9 = 2;
-	int *d9 = malloc(sizeof(int)); *d9 = 4;
+	int *k9 = malloc(sizeof(int)); *k9 = 1;
+	int *d9 = malloc(sizeof(int)); *d9 = 1;
 	EBSTreeInsert(T3, k9, d9);
 
-	int *k10 = malloc(sizeof(int)); *k10 = 3;
-	int *d10 = malloc(sizeof(int)); *d10 = 3;
+	int *k17 = malloc(sizeof(int)); *k17 = 2;
+	int *d17 = malloc(sizeof(int)); *d17 = 2;
+	EBSTreeInsert(T3, k17, d17);
+
+	int *k10 = malloc(sizeof(int)); *k10 = 5;
+	int *d10 = malloc(sizeof(int)); *d10 = 5;
 	EBSTreeInsert(T3, k10, d10);
 
 	int *k11 = malloc(sizeof(int)); *k11 = 4;
-	int *d11 = malloc(sizeof(int)); *d11 = 99;
+	int *d11 = malloc(sizeof(int)); *d11 = 4;
 	EBSTreeInsert(T3, k11, d11);
 
 	viewBSTree(T3);
-	List* L3 = BSTreeToList(T3);
+	List* L4 = BSTreeToList(T3);
 	printf("Liste T3 :\n");
-	viewList(L3);
-	freeBSTree(T3, 1, 1);
-	freeList(L3, 1);
+	viewList(L4);
 
+	BSTNode* predd1 = findPredecessor(T3, T3->root->left->right);
+	BSTNode* succc1 = findSuccessor(T3, T3->root->left->right);
+	BSTNode* predd2 = findPredecessor(T3, T3->root->right->left);
+	BSTNode* succc2 = findSuccessor(T3, T3->root->right->left);
+	printf("Pred de 2 : "); viewInt((int*)predd1->data);
+	printf("\nSucc 2 : "); viewInt((int*)succc1->data);
+	printf("\n");
+	printf("Pred de 4 : "); viewInt((int*)predd2->data);
+	printf("\nSucc 4 : "); viewInt((int*)succc2->data);
+	printf("\n");
+
+	freeBSTree(T3, 1, 0);
+	freeList(L4, 1);
 
 
 	printf("\n4eme test (EBST) :\n");
@@ -254,6 +265,21 @@ int main(int argv, char *argc[]) {
 	printf("\n");
 
 	freeBSTree(T4, 1, 1);
+
+
+
+
+	// Test Instance
+	Instance I = readInstance("./data/exemple");
+	//viewInstance(I);
+
+	reorderInstance(I, OL, SPT);
+	//reorderInstance(I, BST, SPT);
+	//reorderInstance(I, EBST, SPT);
+
+	viewInstance(I);
+
+	freeInstance(I, 1);
 
 
 

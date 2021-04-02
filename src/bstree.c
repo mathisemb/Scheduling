@@ -110,11 +110,12 @@ BSTree * newEBSTree(int (*preceed)(const void*, const void*),
  * @brief
  * Effectuer une rotation gauche autour du nœud y.
  * N'oubliez pas à mettre à jour les facteurs d'équilibre (bfactor) des nœuds modifiés.
- * Il y a 4 cas à considérer :
+ * Il y a 5 cas à considérer :
  * (+) bfactor(y)=-2 et bfactor(y->right)=-1
  * (+) bfactor(y)=-1 et bfactor(y->right)=1
  * (+) bfactor(y)=-1 et bfactor(y->right)=-1
  * (+) bfactor(y)=-1 et bfactor(y->right)=0
+ * (+) bfactor(y)=-2 et bfactor(y->right)=-2
  * Assurez vous que le nœud y ainsi que son fils droit existent.
  */
 static BSTNode* rotateLeft(BSTNode* y) {
@@ -139,6 +140,10 @@ static BSTNode* rotateLeft(BSTNode* y) {
 		y->bfactor = 0;
 		x->bfactor = 1;
 	}
+	else if (y->bfactor == -2 && y->right->bfactor == -2) {
+		y->bfactor = 1;
+		x->bfactor = 0;
+	}
 	return x;
 }
 
@@ -146,11 +151,12 @@ static BSTNode* rotateLeft(BSTNode* y) {
  * @brief
  * Effectuer une rotation droite autour du nœud x.
  * N'oubliez pas à mettre à jour les facteurs d'équilibre (bfactor) des nœuds modifiés.
- * Il y a 4 cas à considérer :
+ * Il y a 5 cas à considérer :
  * (+) bfactor(x)=2 et bfactor(x->left)=1
  * (+) bfactor(x)=1 et bfactor(x->left)=1
  * (+) bfactor(x)=1 et bfactor(x->left)=-1
  * (+) bfactor(x)=1 et bfactor(x->left)=0
+ * (+) bfactor(x)=2 et bfactor(x->left)=2
  * Assurez vous que le nœud x ainsi que son fils gauche existent.
  */
 static BSTNode* rotateRight(BSTNode* x) {
@@ -174,6 +180,10 @@ static BSTNode* rotateRight(BSTNode* x) {
 	else if (x->bfactor == 1 && x->left->bfactor == 0) {
 		x->bfactor = 0;
 		y->bfactor = -1;
+	}
+	else if (x->bfactor == 2 && x->left->bfactor == 2) {
+		x->bfactor = -1;
+		y->bfactor = 0;
 	}
 	return y;
 }
@@ -320,8 +330,7 @@ void viewBSTree(const BSTree* T) {
 static void treetolist(BSTNode* curr, List* list) {
 	if (curr != NULL) {
 		treetolist(curr->left, list);
-		int *data = malloc(sizeof(int)); *data = *((int*)curr->data);
-		listInsertLast(list, data);
+		listInsertLast(list, curr->data);
 		treetolist(curr->right, list);
 	}
 }
