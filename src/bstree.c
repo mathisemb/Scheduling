@@ -374,7 +374,7 @@ static BSTNode* predecessor(BSTNode* curr, void* key, int (*preceed)(const void*
 		if (curr->left != NULL)
 			return predecessor(curr->left, key, preceed);
 		else
-			return curr; // pas de predecesseur	
+			return NULL; // pas de predecesseur	
 	}
 	else { // key >= key de curr
 		if (preceed(curr->key, key)) { // key > key de curr
@@ -383,16 +383,16 @@ static BSTNode* predecessor(BSTNode* curr, void* key, int (*preceed)(const void*
 				if (preceed(pred->key, key))
 					return pred;
 				else 
-					return curr;
+					return NULL; // pas de predecesseur	
 			}
 			else
-				return curr; // pas de predecesseur	
+				return NULL; // pas de predecesseur	
 		}
 		else { // key = key de curr
 			if (curr->left != NULL)
 				return BSTMax(curr->left);
 			else
-				return curr; // pas de predecesseur	
+				return NULL; // pas de predecesseur	
 		}
 	}
 }
@@ -420,7 +420,7 @@ static BSTNode* successor(BSTNode* curr, void* key, int (*preceed)(const void*, 
 		if (curr->right != NULL)
 			return successor(curr->right, key, preceed);
 		else
-			return curr; // pas de successeur	
+			return NULL; // pas de successeur	
 	}
 	else { // key <= key de curr
 		if (preceed(key, curr->key)) { // key < key de curr
@@ -429,16 +429,16 @@ static BSTNode* successor(BSTNode* curr, void* key, int (*preceed)(const void*, 
 				if (preceed(key, succ->key))
 					return succ;
 				else 
-					return curr;
+					return NULL; // pas de predecesseur	
 			}
 			else
-				return curr; // pas de successeur
+				return NULL; // pas de successeur
 		}
 		else { // key = key de curr
 			if (curr->right != NULL)
 				return BSTMin(curr->right);
 			else
-				return curr; // pas de predecesseur	
+				return NULL; // pas de predecesseur	
 		}
 	}
 }
