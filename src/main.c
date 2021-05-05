@@ -51,6 +51,7 @@ int main(int argv, char *argc[]) {
 	*/
 
 
+	/*
 
 	// Test List
 	List* L = newList(viewInt, freeInt); // L = []
@@ -281,6 +282,123 @@ int main(int argv, char *argc[]) {
 
 	freeInstance(I, 1);
 
+	*/
+
+
+
+	// Test Scheduling
+
+	// Essayer avec OL, BST et EBST et avec backfilling = 1 et = 0
+	Instance I = readInstance("./data/exemple2");
+	reorderInstance(I, EBST, LPT);
+
+	Schedule * s1 = newSchedule(BST, 1);
+
+	computeSchedule(s1, I);
+
+	viewSchedule(s1);
+
+	saveSchedule(s1, "./data/res");
+
+	freeSchedule(s1);
+	freeInstance(I, 1);
+
+
+	/*
+	// TEST POUR CORRIGER EBSTREEINSERT
+	// Test Tree
+	printf("1er test (BST) :\n");
+	BSTree* T = newBSTree(compareInt, viewInt, viewInt, freeInt, freeInt);
+	
+	int *k6 = malloc(sizeof(int)); *k6 = 6;
+	int *d6 = malloc(sizeof(int)); *d6 = 6;
+	BSTreeInsert(T, k6, d6);
+
+	int *k5 = malloc(sizeof(int)); *k5 = 5;
+	int *d5 = malloc(sizeof(int)); *d5 = 5;
+	BSTreeInsert(T, k5, d5);
+
+	int *k4 = malloc(sizeof(int)); *k4 = 4;
+	int *d4 = malloc(sizeof(int)); *d4 = 4;
+	BSTreeInsert(T, k4, d4);
+
+	int *k9 = malloc(sizeof(int)); *k9 = 9;
+	int *d9 = malloc(sizeof(int)); *d9 = 9;
+	BSTreeInsert(T, k9, d9);
+
+	int *k7 = malloc(sizeof(int)); *k7 = 7;
+	int *d7 = malloc(sizeof(int)); *d7 = 7;
+	BSTreeInsert(T, k7, d7);
+
+	int *k3 = malloc(sizeof(int)); *k3 = 3;
+	int *d3 = malloc(sizeof(int)); *d3 = 3;
+	BSTreeInsert(T, k3, d3);
+
+	int *k1 = malloc(sizeof(int)); *k1 = 1;
+	int *d1 = malloc(sizeof(int)); *d1 = 1;
+	BSTreeInsert(T, k1, d1);
+
+	int *k2 = malloc(sizeof(int)); *k2 = 2;
+	int *d2 = malloc(sizeof(int)); *d2 = 2;
+	BSTreeInsert(T, k2, d2);
+
+	viewBSTree(T);
+
+	freeBSTree(T, 1, 1);
+
+
+	printf("2eme test (EBST) :\n");
+	BSTree* T = newEBSTree(compareInt, viewInt, viewInt, freeInt, freeInt);
+	
+	int *k6 = malloc(sizeof(int)); *k6 = 6;
+	int *d6 = malloc(sizeof(int)); *d6 = 6;
+	EBSTreeInsert(T, k6, d6);
+
+	int *k5 = malloc(sizeof(int)); *k5 = 5;
+	int *d5 = malloc(sizeof(int)); *d5 = 5;
+	EBSTreeInsert(T, k5, d5);
+
+	int *k4 = malloc(sizeof(int)); *k4 = 4;
+	int *d4 = malloc(sizeof(int)); *d4 = 4;
+	EBSTreeInsert(T, k4, d4);
+
+	int *k9 = malloc(sizeof(int)); *k9 = 9;
+	int *d9 = malloc(sizeof(int)); *d9 = 9;
+	EBSTreeInsert(T, k9, d9);
+
+	int *k7 = malloc(sizeof(int)); *k7 = 7;
+	int *d7 = malloc(sizeof(int)); *d7 = 7;
+	EBSTreeInsert(T, k7, d7);
+
+	int *k3 = malloc(sizeof(int)); *k3 = 3;
+	int *d3 = malloc(sizeof(int)); *d3 = 3;
+	EBSTreeInsert(T, k3, d3);
+
+	int *k1 = malloc(sizeof(int)); *k1 = 1;
+	int *d1 = malloc(sizeof(int)); *d1 = 1;
+	EBSTreeInsert(T, k1, d1);
+
+	int *k2 = malloc(sizeof(int)); *k2 = 2;
+	int *d2 = malloc(sizeof(int)); *d2 = 2;
+	EBSTreeInsert(T, k2, d2);
+
+	viewBSTree(T);
+
+	printf("\n\nRACINE (5) : %d\n", *((int*)(T->root->data)) );
+
+	printf("\nGAUCHE :");
+	printf("\nRacine->left (3) : %d", *((int*)(T->root->left->data)) );
+	printf("\nRacine->left->left (1) : %d", *((int*)(T->root->left->left->data)) );
+	printf("\nRacine->left->right (4) : %d", *((int*)(T->root->left->right->data)) );
+	printf("\nRacine->left->left->right (2) : %d", *((int*)(T->root->left->left->right->data)) );
+
+	printf("\n\nDROITE :");
+	printf("\nRacine->right (7) : %d", *((int*)(T->root->right->data)) );
+	printf("\nRacine->right->left (6) : %d", *((int*)(T->root->right->left->data)) );
+	printf("\nRacine->right->right (9) : %d\n", *((int*)(T->root->right->right->data)) );
+
+	freeBSTree(T, 1, 1);
+	*/
 
 
 	return EXIT_SUCCESS;
