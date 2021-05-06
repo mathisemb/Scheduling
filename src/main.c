@@ -281,27 +281,82 @@ int main(int argv, char *argc[]) {
 	viewInstance(I);
 
 	freeInstance(I, 1);
-
 	*/
 
 
 
-	// Test Scheduling
 
-	// Essayer avec OL, BST et EBST et avec backfilling = 1 et = 0
-	Instance I = readInstance("./data/exemple2");
-	reorderInstance(I, EBST, LPT);
 
-	Schedule * s1 = newSchedule(BST, 1);
+	/*
+	// Test pour corriger bstree.c
+	printf("1er test (BST) :\n");
+	BSTree* T = newBSTree(compareInt, viewInt, viewInt, freeInt, freeInt);
+	
+	int *k6 = malloc(sizeof(int)); *k6 = 6;
+	int *d6 = malloc(sizeof(int)); *d6 = 6;
+	BSTreeInsert(T, k6, d6);
 
-	computeSchedule(s1, I);
+	int *k5 = malloc(sizeof(int)); *k5 = 5;
+	int *d5 = malloc(sizeof(int)); *d5 = 5;
+	BSTreeInsert(T, k5, d5);
 
-	viewSchedule(s1);
+	int *k4 = malloc(sizeof(int)); *k4 = 4;
+	int *d4 = malloc(sizeof(int)); *d4 = 4;
+	BSTreeInsert(T, k4, d4);
 
-	saveSchedule(s1, "./data/res");
+	int *k9 = malloc(sizeof(int)); *k9 = 9;
+	int *d9 = malloc(sizeof(int)); *d9 = 9;
+	BSTreeInsert(T, k9, d9);
 
-	freeSchedule(s1);
-	freeInstance(I, 1);
+	int *k7 = malloc(sizeof(int)); *k7 = 7;
+	int *d7 = malloc(sizeof(int)); *d7 = 7;
+	BSTreeInsert(T, k7, d7);
+
+	int *k3 = malloc(sizeof(int)); *k3 = 3;
+	int *d3 = malloc(sizeof(int)); *d3 = 3;
+	BSTreeInsert(T, k3, d3);
+
+	int *k1 = malloc(sizeof(int)); *k1 = 1;
+	int *d1 = malloc(sizeof(int)); *d1 = 1;
+	BSTreeInsert(T, k1, d1);
+
+	int *k2 = malloc(sizeof(int)); *k2 = 2;
+	int *d2 = malloc(sizeof(int)); *d2 = 2;
+	BSTreeInsert(T, k2, d2);
+
+	viewBSTree(T);
+
+
+	// Tests predecessor et successor
+	printf("\n\n Test predecessor :\n\n");
+
+	printf("1? : %d\n", *((int*)(T->root->left->left->left->left->data)) );
+	printf("2? : %d\n", *((int*)(T->root->left->left->left->left->right->data)) );
+	printf("3? : %d\n", *((int*)(T->root->left->left->left->data)) );
+	printf("4? : %d\n", *((int*)(T->root->left->left->data)) );
+	printf("5? : %d\n", *((int*)(T->root->left->data)) );
+	printf("6? : %d\n", *((int*)(T->root->data)) );
+	printf("7? : %d\n", *((int*)(T->root->right->left->data)) );
+	printf("9? : %d\n", *((int*)(T->root->right->data)) );
+
+	printf("Predecessor de 2 : %d\n", *((int*)(findPredecessor(T, T->root->left->left->left->left->right)->data)) );
+	printf("Predecessor de 3 : %d\n", *((int*)(findPredecessor(T, T->root->left->left->left)->data)) );
+	printf("Predecessor de 4 : %d\n", *((int*)(findPredecessor(T, T->root->left->left)->data)) );
+	printf("Predecessor de 5 : %d\n", *((int*)(findPredecessor(T, T->root->left)->data)) );
+	printf("Predecessor de 6 : %d\n", *((int*)(findPredecessor(T, T->root)->data)) );
+	printf("Predecessor de 7 : %d\n", *((int*)(findPredecessor(T, T->root->right->left)->data)) );
+	printf("Predecessor de 9 : %d\n", *((int*)(findPredecessor(T, T->root->right)->data)) );
+
+	printf("\nSuccessor de 1 : %d\n", *((int*)(findSuccessor(T, T->root->left->left->left->left)->data)) );
+	printf("Successor de 2 : %d\n", *((int*)(findSuccessor(T, T->root->left->left->left->left->right)->data)) );
+	printf("Successor de 3 : %d\n", *((int*)(findSuccessor(T, T->root->left->left->left)->data)) );
+	printf("Successor de 4 : %d\n", *((int*)(findSuccessor(T, T->root->left->left)->data)) );
+	printf("Successor de 5 : %d\n", *((int*)(findSuccessor(T, T->root->left)->data)) );
+	printf("Successor de 6 : %d\n", *((int*)(findSuccessor(T, T->root)->data)) );
+	printf("Successor de 7 : %d\n", *((int*)(findSuccessor(T, T->root->right->left)->data)) );
+
+	freeBSTree(T, 1, 1);
+	*/
 
 
 	/*
@@ -399,6 +454,29 @@ int main(int argv, char *argc[]) {
 
 	freeBSTree(T, 1, 1);
 	*/
+
+
+	// Test Scheduling
+
+	// Essayer avec OL, BST et EBST et avec backfilling = 1 et = 0
+	Instance I = readInstance("./data/exemple2");
+	reorderInstance(I, EBST, LPT);
+
+	Schedule * s1 = newSchedule(EBST, 1);
+
+	computeSchedule(s1, I);
+
+	viewSchedule(s1);
+
+	printf("\nMakespan : %ld\n", makespan(s1));
+	printf("Sum Wj.Cj : %ld\n", SumWjCj(s1));
+	printf("Sum Wj.Fj : %ld\n", SumWjFj(s1));
+	printf("Sum Wj.Tj : %ld\n", SumWjTj(s1));
+
+	saveSchedule(s1, "./data/res");
+
+	freeSchedule(s1);
+	freeInstance(I, 1);
 
 
 	return EXIT_SUCCESS;

@@ -113,8 +113,14 @@ static int OLFindBackfillingPosition(const OList* scheduledTasks, const Task* ta
 			task2Start = *((int*)iterator->succ->key);
 			task2 = (Task*)(iterator->succ->data); // la tache du successeur de l'iterator
 
+			if (iterator == scheduledTasks->head) { // si on est au début de la liste
+				if (task->releaseTime + task->processingTime <= task1Start) { // si il y a de la place pour mettre task avant le 1er élément
+					return task->releaseTime;
+				}
+			}
+
 			if (task2Start - (task1Start + task1->processingTime) >= task->processingTime) { // si il y a de la place pour mettre task
-				if (task2Start - task->releaseTime >= task->processingTime){// et si task est libérée suffisamment tôt
+				if (task2Start - task->releaseTime >= task->processingTime) { // et si task est libérée suffisamment tôt
 					return max(task1Start + task1->processingTime, task->releaseTime);
 				}
 			}
@@ -123,12 +129,8 @@ static int OLFindBackfillingPosition(const OList* scheduledTasks, const Task* ta
 	else
 		if (scheduledTasks->numelm == 1) {
 			task1Start = *((int*)scheduledTasks->head->key);
-			task1 = (Task*)(scheduledTasks->head->data);
-
-			if (task1Start > task->processingTime) { // si il y a de la place pour mettre task
-				if (task1Start - task->releaseTime > task->processingTime){// et si task est libérée suffisamment tôt
-					return task->releaseTime;
-				}
+			if (task->releaseTime + task->processingTime <= task1Start) { // si il y a de la place pour mettre task
+				return task->releaseTime;
 			}
 		}
 		else // (==0)
@@ -169,30 +171,29 @@ static int OLFindStartingTime(const OList *scheduledTasks, const Task* task, int
  * NB : fonction récursive, l'ordre infixe est conseillé.
  */
 static int BSTFindBackfillingPosition(const BSTree* scheduledTasks, const BSTNode* curr, const Task* task) {
-	if (curr == NULL) {
+	if (curr == NULL)
 		return -1;
-	}
 	else {
 		if (task->releaseTime + task->processingTime <= *((int*)curr->key)) { // il est possible que task rentre dans le fils gauche de curr puisqu'il se pourrait
 																	 		  // qu'elle ne dépasse pas le startingTime de curr
-			int left = BSTFindBackfillingPosition(scheduledTasks, curr->left, task); // on regarde dans le fils gauche récursivement
+			int left = BSTFindBackfillingPosition(scheduledTasks, curr->left, task); // on teste dans le fils gauche récursivement
 			if (left == -1) { // pas possible à gauche
 				// on regarde entre curr et son prédecesseur
 				BSTNode * currPred = findPredecessor(scheduledTasks, curr);
 				if (currPred != NULL) { // curr a bien un prédecesseur
-					if ( *((int*)curr->key) - ( *((int*)currPred->key) + ((Task*)currPred)->processingTime) > task->processingTime ) // il y a la place et 
-																																	 // d'après le premier if
-																												 					 // task ne dépassera pas sur curr
-						return max( *((int*)currPred->key) + ((Task*)currPred)->processingTime, task->releaseTime);
+					Task* taskPred = (Task*)(currPred->data);
+					if ( *((int*)curr->key) - ( *((int*)currPred->key) + taskPred->processingTime ) >= task->processingTime ) // il y a la place et 
+																																	// d'après le premier if
+																																	// task ne dépassera pas sur curr
+						return max( ( *((int*)currPred->key) + taskPred->processingTime ), task->releaseTime);
 					else // il n'y a pas la place entre curr et son prédecesseur => on a tout essayé à gauche, donc on cherche à droite
 						return BSTFindBackfillingPosition(scheduledTasks, curr->right, task); // il se pourrait que ça fonctionne à droite
-																							  // si ça retourne -1 c'est juste car on aura
-																							  // tout essayé
+																							// si ça retourne -1 c'est juste car on aura
+																							// tout essayé
 				}
-				else // curr n'a pas de predecesseur, c'est donc la première tache => on a tout essayé à gauche, donc on cherche à droite
-					return BSTFindBackfillingPosition(scheduledTasks, curr->right, task); // il se pourrait que ça fonctionne à droite
-																						  // si ça retourne -1 c'est juste car on aura
-																						  // tout essayé
+				else // curr n'a pas de predecesseur, c'est donc la première tache et commee task->releaseTime + task->processingTime <= *((int*)curr->key)
+					 // càd qu'il y a la place de mettre la task avant curr => on retourne task->releaseTime
+					return task->releaseTime;
 			}
 			else // c'est possible à gauche
 				return left;

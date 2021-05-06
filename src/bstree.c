@@ -394,9 +394,10 @@ BSTNode* BSTMax(BSTNode* node) {
 static BSTNode* predecessor(BSTNode* curr, void* key, int (*preceed)(const void*, const void*)) {
 	assert(curr != NULL);
 	BSTNode* pred;
-	if (preceed(key, curr->key)) { // key <= key de curr
-		if (curr->left != NULL)
+	if (preceed(key, curr->key)) { // key < key de curr
+		if (curr->left != NULL) {
 			return predecessor(curr->left, key, preceed);
+		}
 		else
 			return NULL; // pas de predecesseur	
 	}
@@ -404,10 +405,10 @@ static BSTNode* predecessor(BSTNode* curr, void* key, int (*preceed)(const void*
 		if (preceed(curr->key, key)) { // key > key de curr
 			if (curr->right != NULL) {
 				pred = predecessor(curr->right, key, preceed);
-				if (pred != NULL && preceed(pred->key, key))
+				if (pred == NULL)
+					return curr;
+				else
 					return pred;
-				else 
-					return NULL; // pas de predecesseur	
 			}
 			else
 				return NULL; // pas de predecesseur	
@@ -444,16 +445,16 @@ static BSTNode* successor(BSTNode* curr, void* key, int (*preceed)(const void*, 
 		if (curr->right != NULL)
 			return successor(curr->right, key, preceed);
 		else
-			return NULL; // pas de successeur	
+			return NULL; // pas de successeur
 	}
 	else { // key <= key de curr
 		if (preceed(key, curr->key)) { // key < key de curr
 			if (curr->left != NULL) {
 				succ = successor(curr->left, key, preceed);
-				if (preceed(key, succ->key))
+				if (succ == NULL)
+					return curr;
+				else
 					return succ;
-				else 
-					return NULL; // pas de predecesseur	
 			}
 			else
 				return NULL; // pas de successeur
