@@ -47,6 +47,8 @@ void viewTask(const void *task) {
 Instance readInstance(char * filename) {
     FILE* file = fopen(filename,"r"); // on ouvre le fichier filename en mode lecture  
 
+	if (file == NULL) printf("Problème avec l'ouverture du ficher : %s", filename);
+
 	Instance I = newList(viewTask, freeTask); // une instance est une list de noeud de data de type Task
 
     // strtok permet de découper le contenu du fichier selon les espaces
@@ -54,11 +56,19 @@ Instance readInstance(char * filename) {
 
 	char task[BUFSIZ];
 	while (fgets(task, BUFSIZ, file) != NULL) {
+		/*
 		char* id = strtok(task,"\t");
 		int proctime = atoi(strtok(NULL,"\t"));
 		int reltime = atoi(strtok(NULL,"\t"));
 		int deadline = atoi(strtok(NULL,"\t"));
 		int weight = atoi(strtok(NULL,"\t"));
+		*/
+
+		char* id = strtok(task," ");
+		int proctime = atoi(strtok(NULL," "));
+		int reltime = atoi(strtok(NULL," "));
+		int deadline = atoi(strtok(NULL," "));
+		int weight = atoi(strtok(NULL," "));
 		Task* T = newTask(id, proctime, reltime, deadline, weight);
 		listInsertLast(I, T);
 	}

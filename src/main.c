@@ -10,6 +10,8 @@
 #include "instance.h"
 #include "schedule.h"
 
+#include <time.h>
+
 int main(int argv, char *argc[]) {
 	/*
 	Instance I = readInstance("./data/exemple");
@@ -49,6 +51,101 @@ int main(int argv, char *argc[]) {
 
 	freeInstance(I, 1);
 	*/
+
+
+
+
+
+	/*
+	// Les tests pour comparer aux résultats attendus (donnés le 15 avril)
+	Instance I = readInstance("./data/exemple");
+	//viewInstance(I);
+	reorderInstance(I, EBST, SPT); // SPT
+	//viewInstance(I);
+
+	printf("\n\nSPT + backfilling :\n");
+	Schedule *SOL = newSchedule(OL, 1); // backfilling = 1
+	computeSchedule(SOL, I);
+	viewSchedule(SOL);
+	saveSchedule(SOL, "./data/output_OL");
+	printf("Makespan=%ld\n", makespan(SOL));
+	printf("SumWjCj=%ld\n", SumWjCj(SOL));
+	printf("SumWjFj=%ld\n", SumWjFj(SOL));
+	printf("SumWjTj=%ld\n", SumWjTj(SOL));
+	freeSchedule(SOL);
+
+	//reorderInstance(I, EBST, SPT); // encore SPT
+
+	printf("\n\nSPT sans backfilling :\n");
+	Schedule *SBST = newSchedule(BST, 0); // backfilling = 0
+	computeSchedule(SBST, I);
+	viewSchedule(SBST);
+	saveSchedule(SBST, "./data/output_BST");
+	printf("Makespan=%ld\n", makespan(SBST));
+	printf("SumWjCj=%ld\n", SumWjCj(SBST));
+	printf("SumWjFj=%ld\n", SumWjFj(SBST));
+	printf("SumWjTj=%ld\n", SumWjTj(SBST));
+	freeSchedule(SBST);
+
+	reorderInstance(I, EBST, LPT); // LPT
+
+	printf("\n\nLPT + backfilling :\n");
+	Schedule *SEBST = newSchedule(EBST, 1); // backfilling = 1
+	computeSchedule(SEBST, I);
+	viewSchedule(SEBST);
+	saveSchedule(SEBST, "./data/output_EBST");
+	printf("Makespan=%ld\n", makespan(SEBST));
+	printf("SumWjCj=%ld\n", SumWjCj(SEBST));
+	printf("SumWjFj=%ld\n", SumWjFj(SEBST));
+	printf("SumWjTj=%ld\n", SumWjTj(SEBST));
+	freeSchedule(SEBST);
+
+	freeInstance(I, 1);
+	*/
+
+	clock_t start, end;
+
+    double cpu_time_used;
+
+    // entourer le sous-programme à évaluer avec deux appels à clock()
+
+    start = clock();
+
+	//Instance I = readInstance("data/exemple3");
+    Instance I = readInstance("data/expe/instance_7000_5");
+
+    reorderInstance(I, EBST, SPT);
+
+	printf("\n\nLPT + backfilling :\n");
+	Schedule *SEBST = newSchedule(EBST, 1);
+	computeSchedule(SEBST, I);
+	viewSchedule(SEBST);
+	saveSchedule(SEBST, "./data/output_EBST");
+	printf("Makespan=%ld\n", makespan(SEBST));
+	printf("SumWjCj=%ld\n", SumWjCj(SEBST));
+	printf("SumWjFj=%ld\n", SumWjFj(SEBST));
+	printf("SumWjTj=%ld\n", SumWjTj(SEBST));
+	freeSchedule(SEBST);
+
+
+    end = clock();
+
+
+
+
+
+    freeInstance(I, 1);
+
+
+
+
+
+    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+
+    printf("Time used : \t%lf sec\n", cpu_time_used);
+
+
+
 
 
 	/*
@@ -456,8 +553,8 @@ int main(int argv, char *argc[]) {
 	*/
 
 
+	/*
 	// Test Scheduling
-
 	// Essayer avec OL, BST et EBST et avec backfilling = 1 et = 0
 	Instance I = readInstance("./data/exemple2");
 	reorderInstance(I, EBST, LPT);
@@ -477,6 +574,8 @@ int main(int argv, char *argc[]) {
 
 	freeSchedule(s1);
 	freeInstance(I, 1);
+	*/
+
 
 
 	return EXIT_SUCCESS;
