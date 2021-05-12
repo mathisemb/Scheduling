@@ -20,6 +20,7 @@ static BSTNode* newBSTNode(void* key, void* data) {
 	node->data = data;
 	node->left = NULL;
 	node->right = NULL;
+	return node;
 }
 
 BSTree * newBSTree(int (*preceed)(const void*, const void*),
@@ -34,6 +35,7 @@ BSTree * newBSTree(int (*preceed)(const void*, const void*),
 	arbre->freeKey = freeKey;
 	arbre->freeData = freeData;
 	arbre->balanced = 0;
+	return arbre;
 }
 
 /**
@@ -81,6 +83,7 @@ static BSTNode* newEBSTNode(void* key, void* data) {
 	node->bfactor = 0;
 	node->left = NULL;
 	node->right = NULL;
+	return node;
 }
 
 BSTree * newEBSTree(int (*preceed)(const void*, const void*),
@@ -95,6 +98,7 @@ BSTree * newEBSTree(int (*preceed)(const void*, const void*),
 	arbre->freeKey = freeKey;
 	arbre->freeData = freeData;
 	arbre->balanced = 1;
+	return arbre;
 }
 
 /**
@@ -113,10 +117,10 @@ static BSTNode* rotateLeft(BSTNode* y) {
 	assert(y);
 	assert(y->right);
 
-	BSTNode* A = y->left;
+	//BSTNode* A = y->left;
 	BSTNode* x = y->right;
 	BSTNode* B = x->left;
-	BSTNode* C = x->right;
+	//BSTNode* C = x->right;
 
 	if (y->bfactor == -2 && y->right->bfactor == -1) {
 		y->bfactor = 0;
@@ -161,9 +165,9 @@ static BSTNode* rotateRight(BSTNode* x) {
 	assert(x);
 	assert(x->left);
 
-	BSTNode* C = x->right;
+	//BSTNode* C = x->right;
 	BSTNode* y = x->left;
-	BSTNode* A = y->left;
+	//BSTNode* A = y->left;
 	BSTNode* B = y->right;
 
 	if (x->bfactor == 2 && x->left->bfactor == 1) {

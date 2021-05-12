@@ -23,6 +23,7 @@ List * newList(void (*viewData)(const void*), void (*freeData)(void*)) {
 	liste->numelm = 0;
 	liste->viewData = viewData;
 	liste->freeData = freeData;
+	return liste;
 }
 
 void freeList(List * L, int deleteData) {
@@ -132,4 +133,6 @@ LNode* listRemoveNode(List * L, LNode * node) {
 			return node;
 		}
 	}
+	else
+		return NULL;
 }

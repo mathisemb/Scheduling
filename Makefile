@@ -1,35 +1,31 @@
 IDIR = include
 ODIR = obj
 SDIR = src
+JDIR = java
 
 CC = gcc
-CFLAGS = -g -std=c11 -I$(IDIR)
-#CFLAGS = -g -Wall -Wextra -std=c11 -I$(IDIR)
+CFLAGS = -Wall -fPIC -I$(IDIR)
+LIB = $(JDIR)/libmylibrary.so
 
-PROG = scheduling
+#JINCLUDES = -I/usr/lib/jvm/java-8-openjdk-amd64/ -I/usr/lib/jvm/java-8-openjdk-amd64/include/ -I/usr/lib/jvm/java-8-openjdk-amd64/include/linux/
+JINCLUDES = -I/usr/lib/jvm/java-11-openjdk-amd64/ -I/usr/lib/jvm/java-11-openjdk-amd64/include/ -I/usr/lib/jvm/java-11-openjdk-amd64/include/linux/
 
-_DEPS = utilities.h list.h olist.h bstree.h instance.h schedule.h
+_DEPS = application_MyClass.h utilities.h list.h olist.h bstree.h instance.h schedule.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ= utilities.o list.o olist.o bstree.o instance.o schedule.o main.o
+_OBJ = utilities.o list.o olist.o bstree.o instance.o schedule.o main.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
-.PHONY: run all remake clean delete
+all: $(OBJ) $(ODIR)/application_MyClass.o
+	$(CC) -shared -o $(LIB) $^
 
-all : $(PROG)
-	./$(PROG)
+$(ODIR)/application_MyClass.o : $(SDIR)/application_MyClass.c $(DEPS)
+	$(CC) $(CFLAGS) $(JINCLUDES) -c -o $@ $<
 
-$(PROG) : $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^
-
-$(ODIR)/%.o : $(SDIR)/%.c $(DEPS)
+$(ODIR)/%.o: $(SDIR)/%.c $(DEPS)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-run : all
-	./$(PROG)
+.PHONY: clean
 
-clean :
-	rm -f $(ODIR)/*.o
-
-delete : clean
-	rm $(PROG)
+clean:
+	rm -f $(ODIR)/*.o $(LIB)

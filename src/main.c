@@ -103,50 +103,81 @@ int main(int argv, char *argc[]) {
 	freeInstance(I, 1);
 	*/
 
+	// EVALUATION DES PERFORMANCES
 	clock_t start, end;
-
     double cpu_time_used;
 
-    // entourer le sous-programme à évaluer avec deux appels à clock()
-
-    start = clock();
-
-	//Instance I = readInstance("data/exemple3");
-    Instance I = readInstance("data/expe/instance_7000_5");
-
+	// ==========================================500==========================================
+    Instance I = readInstance("data/expe/instance_0500_5");
+	// on mesure reorderInstance
+	start = clock();
     reorderInstance(I, EBST, SPT);
-
-	printf("\n\nLPT + backfilling :\n");
-	Schedule *SEBST = newSchedule(EBST, 1);
-	computeSchedule(SEBST, I);
-	viewSchedule(SEBST);
-	saveSchedule(SEBST, "./data/output_EBST");
-	printf("Makespan=%ld\n", makespan(SEBST));
-	printf("SumWjCj=%ld\n", SumWjCj(SEBST));
-	printf("SumWjFj=%ld\n", SumWjFj(SEBST));
-	printf("SumWjTj=%ld\n", SumWjTj(SEBST));
-	freeSchedule(SEBST);
-
-
-    end = clock();
-
-
-
-
-
-    freeInstance(I, 1);
-
-
-
-
-
+	end = clock();
     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    printf("Time used for reorderInstance EBST taille 500 : \t%lf sec\n", cpu_time_used);
+	Schedule * s1 = newSchedule(EBST, 1);
+	// on mesure computeSchedule
+	start = clock();
+	computeSchedule(s1, I);
+	end = clock();
+	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    printf("Time used for computeSchedule EBST taille 500 : \t%lf sec\n", cpu_time_used);
+	/*
+	printf("Makespan=%ld\n", makespan(s1));
+	printf("SumWjCj=%ld\n", SumWjCj(s1));
+	printf("SumWjFj=%ld\n", SumWjFj(s1));
+	printf("SumWjTj=%ld\n", SumWjTj(s1));
+	*/
+	freeSchedule(s1);
+	freeInstance(I, 1);
 
-    printf("Time used : \t%lf sec\n", cpu_time_used);
+	// ==========================================4000==========================================
+    I = readInstance("data/expe/instance_4000_5");
+	// on mesure reorderInstance
+	start = clock();
+    reorderInstance(I, EBST, SPT);
+	end = clock();
+    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    printf("Time used for reorderInstance EBST taille 4000 : \t%lf sec\n", cpu_time_used);
+	s1 = newSchedule(EBST, 1);
+	// on mesure computeSchedule
+	start = clock();
+	computeSchedule(s1, I);
+	end = clock();
+	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    printf("Time used for computeSchedule EBST taille 4000 : \t%lf sec\n", cpu_time_used);
+	/*
+	printf("Makespan=%ld\n", makespan(s1));
+	printf("SumWjCj=%ld\n", SumWjCj(s1));
+	printf("SumWjFj=%ld\n", SumWjFj(s1));
+	printf("SumWjTj=%ld\n", SumWjTj(s1));
+	*/
+	freeSchedule(s1);
+	freeInstance(I, 1);
 
-
-
-
+	// ==========================================7000==========================================
+    I = readInstance("data/expe/instance_7000_5");
+	// on mesure reorderInstance
+	start = clock();
+    reorderInstance(I, EBST, SPT);
+	end = clock();
+    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    printf("Time used for reorderInstance EBST taille 7000 : \t%lf sec\n", cpu_time_used);
+	s1 = newSchedule(EBST, 1);
+	// on mesure computeSchedule
+	start = clock();
+	computeSchedule(s1, I);
+	end = clock();
+	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    printf("Time used for computeSchedule EBST taille 7000 : \t%lf sec\n", cpu_time_used);
+	/*
+	printf("Makespan=%ld\n", makespan(s1));
+	printf("SumWjCj=%ld\n", SumWjCj(s1));
+	printf("SumWjFj=%ld\n", SumWjFj(s1));
+	printf("SumWjTj=%ld\n", SumWjTj(s1));
+	*/
+	freeSchedule(s1);
+	freeInstance(I, 1);
 
 	/*
 

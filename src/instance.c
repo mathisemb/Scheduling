@@ -23,6 +23,7 @@ Task * newTask(char* id, int proctime, int reltime, int deadline, int weight) {
 	task->releaseTime = reltime;
 	task->deadline = deadline;
 	task->weight = weight;
+	return task;
 }
 
 void freeTask(void* task) {
