@@ -65,11 +65,12 @@ Instance readInstance(char * filename) {
 		int weight = atoi(strtok(NULL,"\t"));
 		*/
 
-		char* id = strtok(task," ");
-		int proctime = atoi(strtok(NULL," "));
-		int reltime = atoi(strtok(NULL," "));
-		int deadline = atoi(strtok(NULL," "));
-		int weight = atoi(strtok(NULL," "));
+		char* id = strtok(task,"	\t ");
+		int proctime = atoi(strtok(NULL,"	\t "));
+		int reltime = atoi(strtok(NULL,"	\t "));
+		int deadline = atoi(strtok(NULL,"	\t "));
+		int weight = atoi(strtok(NULL,"	\t "));
+
 		Task* T = newTask(id, proctime, reltime, deadline, weight);
 		listInsertLast(I, T);
 	}
