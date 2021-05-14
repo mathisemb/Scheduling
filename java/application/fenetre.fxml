@@ -108,10 +108,42 @@
             <Insets bottom="20.0" right="25.0" />
          </GridPane.margin>
       </Button>
-      <Pane fx:id="diagramme" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="155.0" prefWidth="765.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+      <Pane fx:id="diagramme" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="98.0" prefWidth="750.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets top="30.0" />
          </GridPane.margin>
       </Pane>
+      <Label fx:id="wc" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets bottom="65.0" left="50.0" />
+         </GridPane.margin>
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="wf" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets bottom="65.0" />
+         </GridPane.margin>
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="wt" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets bottom="65.0" right="100.0" />
+         </GridPane.margin>
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="ms" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+         <GridPane.margin>
+            <Insets bottom="25.0" />
+         </GridPane.margin>
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
    </children>
 </GridPane>
